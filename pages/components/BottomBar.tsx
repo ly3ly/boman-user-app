@@ -5,43 +5,27 @@ import UserCenter from '../screens/UserCenter'
 import { Feather } from '@expo/vector-icons'
 import HomePage from '../screens/HomePage'
 
-const Tab = createBottomTabNavigator()
 
 const BottomBar: React.FC = () => {
-  // console.log(weather)
-
+  const Tab = createBottomTabNavigator()
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: 'tomato',
-        tabBarInactiveTintColor: 'gray',
+        tabBarActiveTintColor: '#3498db',
+        tabBarInactiveTintColor: 'black',
         tabBarStyle: {
-          backgroundColor: 'lightblue'
+          backgroundColor: '#f0f0f0'
         },
         headerStyle: {
           backgroundColor: 'lightblue'
         },
-        headerTitleStyle: {
-          fontWeight: 'bold',
-          fontSize: 25,
-          color: 'tomato'
-        }
+        // headerTitleStyle: {
+        //   fontWeight: 'bold',
+        //   fontSize: 25,
+        //   color: 'tomato'
+        // }
       }}
     >
-      <Tab.Screen
-        name={'HomePage'}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <Feather
-              name={'droplet'}
-              size={25}
-              color={focused ? 'tomato' : 'black'}
-            />
-          )
-        }}
-      >
-        {() => <HomePage />}
-      </Tab.Screen>
       <Tab.Screen
         name={'UserCenter'}
         options={{
@@ -49,13 +33,28 @@ const BottomBar: React.FC = () => {
             <Feather
               name={'user'}
               size={25}
-              color={focused ? 'tomato' : 'black'}
+              color={focused ? '#3498db' : 'black'}
             />
           )
         }}
       >
         {() => <UserCenter />}
       </Tab.Screen>
+      <Tab.Screen
+        name={'HomePage'}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Feather
+              name={'droplet'}
+              size={25}
+              color={focused ? '#3498db' : 'black'}
+            />
+          )
+        }}
+      >
+        {() => <HomePage />}
+      </Tab.Screen>
+
 
     </Tab.Navigator>
   )

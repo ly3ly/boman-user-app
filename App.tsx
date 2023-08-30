@@ -2,12 +2,12 @@ import React from "react";
 import { View, StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { createTheme, ThemeProvider } from "@rneui/themed";
+import BottomBar from "./pages/components/BottomBar";
 
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from "./pages/screens/LoginScreen";
-import HomeIndex from "./pages/screens/HomeIndex";
 
 import { RootStackParamList } from "./pages/DataInterfaces";
 
@@ -24,10 +24,11 @@ const App: React.FC = () => {
             options={{ title: '登录' }}
           />
           <Stack.Screen
-            name="HomeIndex"
-            component={HomeIndex}
-            options={{ title: 'HomeIndex', headerShown: false }}
-          />
+            name="Home"
+            options={{ title: 'Home', headerShown: false }}
+          >
+            {() => (<BottomBar />)}
+          </Stack.Screen>
         </Stack.Navigator>
       </SafeAreaProvider>
     </NavigationContainer>

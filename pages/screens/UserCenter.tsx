@@ -1,18 +1,27 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
-import { View, StyleSheet, Image, Text, Button } from 'react-native';
+import { View, StyleSheet, Image, Text, StatusBar, ScrollView } from 'react-native';
 import { getUserData } from '../utilities/LocalStorage';
 import { useNavigation } from '@react-navigation/native';
 import { userData } from '../DataInterfaces';
 import { RootStackParamList } from '../DataInterfaces';
 import { StackNavigationProp } from "@react-navigation/stack";
+import UserInfo from '../components/UserInfo';
+import { Button } from '@rneui/themed';
+import { editBtnStyle as btnStyle } from '../components/StyleUnify';
 
 const UserCenter: React.FC = () => {
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-    const [userData, setUserData] = useState<userData | null>(null)
+    const [userData, setUserData] = useState<userData | null>(null);
 
     useEffect(() => {
         loadUserData();
     }, []);
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerShown: false, // 隐藏标题
+        });
+    }, [navigation]);
 
     const loadUserData = async () => {
         const data = await getUserData();
@@ -26,13 +35,21 @@ const UserCenter: React.FC = () => {
     return (
         <View style={styles.container}>
             {userData && (
-                <View>
-                    <Image source={{ uri: userData.avatar }} style={styles.avatar} />
-                    <Text style={styles.name}>{userData.name}</Text>
-                    <Text style={styles.phoneNumber}>{userData.phoneNumber}</Text>
-                    {/* 其他用户信息... */}
-                    <Button title="退出" onPress={() => navigation.navigate('Login')} />
-                </View>
+                <ScrollView style={{ marginTop: StatusBar.currentHeight || 50, paddingHorizontal: 16 }}>
+                    <UserInfo
+                        name={userData.name}
+                        avatar={userData.avatar}
+                        phoneNumber={userData.phoneNumber} />
+
+
+                    <Button
+                        title="退出"
+                        containerStyle={{ marginTop: 200, marginBottom: 50 }}
+                        // buttonStyle={btnStyle.editButtonStyle}
+                        titleStyle={btnStyle.editButtonTitle}
+                        onPress={() => navigation.navigate('Login')}
+                    />
+                </ScrollView>
             )}
         </View>
     );
@@ -41,8 +58,6 @@ const UserCenter: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     avatar: {
         width: 150,
